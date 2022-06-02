@@ -1,4 +1,4 @@
-function montecarlo()
+function montecarlo(shots)
     x1 = 0; %lewa sciana
     x2 = 1150; %lewa wneka drzwi
     x3 = 2230; %prawa wneka drzwi
@@ -20,7 +20,7 @@ function montecarlo()
     z4 = 2600; %sufit
     
     trafienia = 0;
-    strzaly = 10000;
+    strzaly = shots;
     obj_obszaru = x7*y6*z4;
     
     %losowanie punktu
@@ -32,27 +32,28 @@ function montecarlo()
         %wneka drzwiowa
         if (X(i) >= x2 && X(i) <=x3 && Y(i) >=y1 && Y(i) <= y2 && Z(i) >= z1 && Z(i) <= z4)
             trafienia = trafienia + 1;
-            plot3(X(i),Y(i)-1000,Z(i)-4000, 'og');
+            plot3(X(i),Y(i)-1000,Z(i)-4000, 'og', app.UIAxes);
         %mala wneka
         elseif (X(i) >= x1 && X(i) <=x6 && Y(i) >=y2 && Y(i) <= y3 && Z(i) >= z1 && Z(i) <= z4)
             trafienia = trafienia + 1;
-            plot3(X(i),Y(i)-1000,Z(i)-4000, 'og');
+            plot3(X(i),Y(i)-1000,Z(i)-4000, 'og', app.UIAxes);
         %sala do sufitu / poczatku skosu
         elseif (X(i) >= x1 && X(i) <=x7 && Y(i) >=y3 && Y(i) <= y4 && Z(i) >= z1 && Z(i) <= z4)
             trafienia = trafienia + 1;
-            plot3(X(i),Y(i)-1000,Z(i)-4000,'og');
+            plot3(X(i),Y(i)-1000,Z(i)-4000,'og', app.UIAxes);
         %skos
-        elseif (X(i) >= x1 && X(i) <=x7 && Y(i) >=y4 && Y(i) <= y5 && Z(i) >= z1 &&  Z(i) <= interp2([x7 0], [y4 y5], [z4 z4; z2 z2], X(i), Y(i), 'cubic'))
+        elseif (X(i) >= x1 && X(i) <=x7 && Y(i) >=y4 && Y(i) <= y5 && Z(i) >= z1 &&  Z(i) <= interp2([x7 0], [y4 y5], [z4 z4; z2 z2], X(i), Y(i), 'linear'))
             trafienia = trafienia + 1;
-            plot3(X(i),Y(i)-1000,Z(i)-4000, 'og');
+            plot3(X(i),Y(i)-1000,Z(i)-4000, 'og', app.UIAxes);
         %wneka srodkowa
         elseif (X(i) >= x4 && X(i) <=x5 && Y(i) >=y5 && Y(i) <= y6 && Z(i) >= z1 && Z(i) <= z3)
             trafienia = trafienia + 1;
-            plot3(X(i),Y(i)-1000,Z(i)-4000,'og');
+            plot3(X(i),Y(i)-1000,Z(i)-4000,'og', app.UIAxes);
         else
             %nietrafione
-            plot3(X(i),Y(i)-1000,Z(i)-4000, 'or');
+            plot3(X(i),Y(i)-1000,Z(i)-4000, 'or', app.UIAxes);
         end
     end
-    trafienia
-    objetosc = trafienia / strzaly * obj_obszaru
+    %trafienia
+    objetosc = trafienia / strzaly * obj_obszaru;
+    disp("Objętość bryły: " + objetosc + "mm3; " + objetosc/1000000000 + "m3");

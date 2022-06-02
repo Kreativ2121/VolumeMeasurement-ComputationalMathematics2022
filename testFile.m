@@ -15,16 +15,15 @@ t = obj.f.v ;
 N = 1 ;
 
 figure()
-tris = trisurf(t,p(:,1),p(:,2),p(:,3),0)
+tris = trisurf(t,p(:,1),p(:,2),p(:,3),0);
 % [c,h]=tricontour(t,p(:,1),p(:,2),p(:,3),N) ;
 %axis square;
 %axis equal;
 %view([90, 45]);
 direction = [1 0 0];
 rotate(tris,direction,90)
-
-
-
+hold on
+montecarlo(3000)
 
 function displayobjnotexture (obj)
     figure()
